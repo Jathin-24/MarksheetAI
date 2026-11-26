@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -23,8 +24,9 @@ MAX_MARK = 10
 
 # Recognition
 TROCR_MODEL = "microsoft/trocr-small-handwritten"   # or microsoft/trocr-base-handwritten
-AUTO_ACCEPT_CONFIDENCE = 0.85      # ensemble confidence needed to skip the "review" flag
+AUTO_ACCEPT_CONFIDENCE = float(os.environ.get("AUTO_ACCEPT_CONFIDENCE", 0.85))  # >=2 models;      # ensemble confidence needed to skip the "review" flag
 BLANK_INK_RATIO = 0.012            # below this fraction of ink pixels the box is treated as blank (measured: blanks <=0.009, real marks >=0.0196)
+SINGLE_ENGINE_CONFIDENCE = float(os.environ.get("SINGLE_ENGINE_CONFIDENCE", 0.80))  # only 1 model active; lower = fewer orange boxes, more risk
 FAINT_INK_RATIO = 0.02             # marks with less ink than this are always flagged for review
 BLANK_MIN_COMPONENT_RATIO = 0.0012 # a single stroke blob must be at least this big
 

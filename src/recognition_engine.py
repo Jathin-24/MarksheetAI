@@ -49,7 +49,7 @@ def recognise_box(box_id: str, crop_bgr: np.ndarray, engines: list) -> BoxResult
     tops = {r.engine: r.top for r in usable}
     if len(set(tops.values())) > 1:
         reasons.append("engines disagree: " + ", ".join(f"{k}={v}" for k, v in tops.items()))
-    need = settings.AUTO_ACCEPT_CONFIDENCE if len(usable) > 1 else 0.95
+    need = settings.AUTO_ACCEPT_CONFIDENCE if len(usable) > 1 else settings.SINGLE_ENGINE_CONFIDENCE
     if conf < need:
         reasons.append(f"low confidence ({conf:.2f})")
     if ink.ratio < settings.FAINT_INK_RATIO:
