@@ -32,7 +32,7 @@ warnings.filterwarnings("ignore")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 log = logging.getLogger("app")
 
-st.set_page_config(page_title="Marksheet Evaluator", page_icon="ðŸ“", layout="centered")
+st.set_page_config(page_title="Marksheet Evaluator", page_icon="\U0001f4dd", layout="centered")
 st.markdown("""<style>.block-container{padding-top:1.2rem;padding-bottom:3rem;max-width:760px}
 div[data-testid="stMetricValue"]{font-size:1.6rem}</style>""", unsafe_allow_html=True)
 
@@ -72,9 +72,9 @@ def cap_size(img: np.ndarray) -> np.ndarray:
 
 
 # ------------------------------------------------------------------ header
-st.title("ðŸ“ Marksheet Evaluator")
+st.title("\U0001f4dd Marksheet Evaluator")
 eng, skipped = engines()
-tab_scan, tab_class, tab_help = st.tabs(["ðŸ“· Scan & evaluate", "ðŸ‘¥ Class list", "â„¹ï¸ Help"])
+tab_scan, tab_class, tab_help = st.tabs(["\U0001f4f7 Scan & evaluate", "\U0001f465 Class list", "\u2139\ufe0f Help"])
 
 # ================================================================== SCAN
 with tab_scan:
@@ -112,18 +112,18 @@ with tab_scan:
             c1.image(rgb(enlarge(sheet.crops[bid], 2)), caption=f"Box {bid}")
             with c2:
                 if need_check and r.reasons:
-                    st.caption("âš ï¸ " + "; ".join(r.reasons))
+                    st.caption("\u26a0\ufe0f " + "; ".join(r.reasons))
                 blank = st.checkbox("blank", value=r.value is None, key=f"bl{n}{bid}")
                 val = st.number_input("mark", 0, 10, value=int(r.value) if r.value is not None else 0,
                                       step=1, key=f"v{n}{bid}", disabled=blank, label_visibility="collapsed")
                 if need_check:
-                    st.checkbox("âœ” I checked this", key=f"ok{n}{bid}")
+                    st.checkbox("\u2714 I checked this", key=f"ok{n}{bid}")
             values[bid] = None if blank else int(val)
 
-        st.subheader("1 Â· Check the marks")
+        st.subheader("1 \u00b7 Check the marks")
         if flagged:
             unchecked = [b for b in flagged if not st.session_state.get(f"ok{n}{b}")]
-            st.warning(f"{len(flagged)} box(es) are unclear. Compare with the photo, fix if needed and tick âœ”.")
+            st.warning(f"{len(flagged)} box(es) are unclear. Compare with the photo, fix if needed and tick \u2714.")
             for bid in flagged:
                 with st.container(border=True):
                     box_editor(bid, True)
@@ -146,15 +146,15 @@ with tab_scan:
         # ---------------------------------------------------------- result
         ev = evaluate(values)
         ta, tb, ts = tables(ev)
-        st.subheader("2 Â· Result")
+        st.subheader("2 \u00b7 Result")
         if unchecked:
-            st.error(f"Totals are provisional - {len(unchecked)} unclear box(es) not yet ticked âœ”: {', '.join(unchecked)}")
+            st.error(f"Totals are provisional - {len(unchecked)} unclear box(es) not yet ticked \u2714: {', '.join(unchecked)}")
         st.markdown("**Part A** (marks per question)")
         st.table(ta.set_index("Question"))
         st.markdown("**Part B** (internal choice - the better question of each pair counts)")
         st.table(tb.set_index("Question"))
         for note in ev.notes:
-            st.caption("â„¹ï¸ " + note)
+            st.caption("\u2139\ufe0f " + note)
         st.markdown("**Final marks**")
         m1, m2, m3 = st.columns(3)
         m1.metric("Part A", f"{fmt(ev.part_a_total)} / {settings.PART_A_MAX}")
@@ -162,22 +162,22 @@ with tab_scan:
         m3.metric("TOTAL", f"{fmt(ev.total)} / {TOTAL_MAX:g}")
 
         # ---------------------------------------------------------- save / export
-        st.subheader("3 Â· Save")
+        st.subheader("3 \u00b7 Save")
         student = st.text_input("Roll no. / name", key=f"stu{n}")
         matrix = build_matrix(values, student or None)
         meta = metadata_records(sheet.results, sheet.aligned.boxes, {}, {})
         c1, c2 = st.columns(2)
-        add = c1.button("âž• Add to class list", type="primary", disabled=bool(unchecked) or not student)
+        add = c1.button("\u2795 Add to class list", type="primary", disabled=bool(unchecked) or not student)
         if add:
             st.session_state.setdefault("class_rows", []).append(class_row(student, values, ev))
             st.success(f"Added {student}. Scan the next sheet below.")
-        c2.download_button("â¬‡ï¸ This student (Excel)", student_excel(ev, student, meta),
+        c2.download_button("\u2b07\ufe0f This student (Excel)", student_excel(ev, student, meta),
                            f"{student or 'student'}_evaluation.xlsx",
                            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-        st.download_button("â¬‡ï¸ Marks matrix (JSON)", matrix_json(matrix), f"{student or 'student'}_marks.json", "application/json")
+        st.download_button("\u2b07\ufe0f Marks matrix (JSON)", matrix_json(matrix), f"{student or 'student'}_marks.json", "application/json")
         if unchecked:
-            st.caption("Tick âœ” on every unclear box to enable 'Add to class list'.")
-        st.button("ðŸ“· Next marksheet", on_click=new_sheet)
+            st.caption("Tick \u2714 on every unclear box to enable 'Add to class list'.")
+        st.button("\U0001f4f7 Next marksheet", on_click=new_sheet)
 
 # ================================================================== CLASS
 with tab_class:
@@ -189,10 +189,10 @@ with tab_class:
         st.dataframe(df, hide_index=True)
         st.caption(f"{len(rows)} student(s)")
         c1, c2 = st.columns(2)
-        c1.download_button("â¬‡ï¸ Class (Excel)", class_excel(rows), "class_marks.xlsx",
+        c1.download_button("\u2b07\ufe0f Class (Excel)", class_excel(rows), "class_marks.xlsx",
                            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-        c2.download_button("â¬‡ï¸ Class (CSV)", df.to_csv(index=False), "class_marks.csv", "text/csv")
-        if st.button("ðŸ—‘ï¸ Clear class list"):
+        c2.download_button("\u2b07\ufe0f Class (CSV)", df.to_csv(index=False), "class_marks.csv", "text/csv")
+        if st.button("\U0001f5d1\ufe0f Clear class list"):
             st.session_state["class_rows"] = []
             st.rerun()
 
@@ -201,13 +201,13 @@ with tab_help:
     st.markdown(f"""
 **How the marks are calculated**
 
-* **Part A** = 1a + 1b + 1c + 1d + 1e â†’ out of **{settings.PART_A_MAX}**
+* **Part A** = 1a + 1b + 1c + 1d + 1e \u2192 out of **{settings.PART_A_MAX}**
 * **Part B** has internal choice: **(Q2 or Q3), (Q4 or Q5), (Q6 or Q7)**. For every pair only the question with
-  more marks (a + b) is counted â†’ 3 Ã— 10 = 30, then **halved** â†’ out of **{PART_B_MAX:g}**
-* **Total** = Part A + Part B â†’ out of **{TOTAL_MAX:g}**. Nothing is rounded (e.g. 22.5 stays 22.5).
+  more marks (a + b) is counted \u2192 3 \u00d7 10 = 30, then **halved** \u2192 out of **{PART_B_MAX:g}**
+* **Total** = Part A + Part B \u2192 out of **{TOTAL_MAX:g}**. Nothing is rounded (e.g. 22.5 stays 22.5).
 * A blank box counts as 0 in the sum (a note is shown). If both questions of a pair are filled, the higher one counts.
 
 **Privacy:** photos are processed in memory and not saved. Download your class sheet before closing the page.
 
-**Models active:** {", ".join(e.name for e in eng)}{(" Â· unavailable: " + ", ".join(skipped)) if skipped else ""}
+**Models active:** {", ".join(e.name for e in eng)}{(" \u00b7 unavailable: " + ", ".join(skipped)) if skipped else ""}
 """)

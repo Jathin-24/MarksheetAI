@@ -17,7 +17,7 @@ def require_access_code() -> None:
             pw = None
     if not pw or st.session_state.get("authed"):
         return
-    st.title("ðŸ“ Marksheet Evaluator")
+    st.title("\U0001f4dd Marksheet Evaluator")
     entered = st.text_input("Access code", type="password")
     if entered:
         if hmac.compare_digest(entered.encode(), str(pw).encode()):

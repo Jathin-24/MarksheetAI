@@ -7,3 +7,4 @@
 
 Notes: free apps go to sleep when unused (tap "wake up"); storage is temporary, so download the class Excel before closing; photos are processed in memory.
 Optional TrOCR/PyTorch is too heavy for the free tier - leave `requirements.txt` as is.
+  

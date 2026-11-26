@@ -17,12 +17,12 @@ def tables(ev: Evaluation) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     for p in ev.pairs:
         for s in (p.left, p.right):
             rows.append({"Question": f"Q{s.q}", "a": fmt(s.a), "b": fmt(s.b),
-                         "a+b": fmt(s.total) if s.attempted else "–", "Counted": "✔" if s.counted else ""})
+                         "a+b": fmt(s.total) if s.attempted else "\u2013", "Counted": "\u2714" if s.counted else ""})
     rows.append({"Question": "Part B (3 best of pairs)", "a": "", "b": "", "a+b": f"{ev.part_b_raw}", "Counted": "of 30"})
     b = pd.DataFrame(rows)
     s = pd.DataFrame([
         {"": "Part A", "Marks": fmt(ev.part_a_total), "Out of": f"{settings.PART_A_MAX}"},
-        {"": "Part B (30 ÷ 2)", "Marks": fmt(ev.part_b), "Out of": f"{PART_B_MAX:g}"},
+        {"": "Part B (30 \u00f7 2)", "Marks": fmt(ev.part_b), "Out of": f"{PART_B_MAX:g}"},
         {"": "TOTAL", "Marks": fmt(ev.total), "Out of": f"{TOTAL_MAX:g}"}])
     return a, b, s
 

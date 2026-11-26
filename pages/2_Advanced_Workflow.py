@@ -32,13 +32,13 @@ from src.validation import validate_boxes, validate_mark, validate_upload
 warnings.filterwarnings("ignore")
 logging.basicConfig(level=logging.INFO)
 settings.ensure_dirs()
-st.set_page_config(page_title="Advanced workflow", page_icon="ðŸ“", layout="wide")
+st.set_page_config(page_title="Advanced workflow", page_icon="\U0001f4dd", layout="wide")
 from src.access import require_access_code  # noqa: E402
 
 require_access_code()
 
 STEPS = ["1 Home", "2 Upload", "3 Alignment", "4 Boxes", "5 Crops", "6 Recognition", "7 Verify", "8 Matrix", "9 Export"]
-BADGE = {"auto": "ðŸŸ¢ confident", "review": "ðŸŸ  please check", "blank": "âšª blank", "manual": "âœï¸ edited"}
+BADGE = {"auto": "\U0001f7e2 confident", "review": "\U0001f7e0 please check", "blank": "\u26aa blank", "manual": "\u270f\ufe0f edited"}
 
 
 @st.cache_resource(show_spinner="Loading recognition models (first time only)...")
@@ -92,7 +92,7 @@ def final_values(s: SheetResult) -> dict[str, int | None]:
 
 # ------------------------------------------------------------------ sidebar
 with st.sidebar:
-    st.title("ðŸ“ Marksheet AI")
+    st.title("\U0001f4dd Marksheet AI")
     step = st.radio("Workflow", STEPS, key="step")
     st.divider()
     st.checkbox("Use TrOCR (if installed)", value=True, key="use_trocr")
@@ -101,7 +101,7 @@ with st.sidebar:
     st.caption("Active models: " + ", ".join(e.name for e in engines))
     if skipped:
         st.caption("Not available: " + ", ".join(skipped) + " - see README to enable.")
-    if st.button("ðŸ”„ New marksheet", use_container_width=True):
+    if st.button("\U0001f504 New marksheet", use_container_width=True):
         reset()
         st.rerun()
 
@@ -111,8 +111,8 @@ if step == STEPS[0]:
     st.write("Turn a photo of a handwritten marksheet cover into a clean matrix of the 17 sub-question marks "
              "(Part A: 1a-1e, Part B: 2A-7B). **It never adds up totals** - that stays with you.")
     st.markdown("""
-**Photo tips:** whole marks tables in the frame Â· good light, no shadow across the tables Â· camera roughly above the
-page Â· keep the phone steady Â· any rotation is fine (the app turns the page the right way up).
+**Photo tips:** whole marks tables in the frame \u00b7 good light, no shadow across the tables \u00b7 camera roughly above the
+page \u00b7 keep the phone steady \u00b7 any rotation is fine (the app turns the page the right way up).
 
 **Formats:** JPG, JPEG, PNG. Everything stays on this computer.
 """)
@@ -136,11 +136,11 @@ elif step == STEPS[1]:
             work = st.session_state["working"]
             st.image(rgb(work), caption=f"{up.name} - {work.shape[1]}x{work.shape[0]} px", use_container_width=True)
             c1, c2, c3 = st.columns(3)
-            if c1.button("â†º Rotate left"):
+            if c1.button("\u21ba Rotate left"):
                 st.session_state["working"] = np.ascontiguousarray(np.rot90(work, 1)); st.session_state["sheet"] = None; st.rerun()
-            if c2.button("â†» Rotate right"):
+            if c2.button("\u21bb Rotate right"):
                 st.session_state["working"] = np.ascontiguousarray(np.rot90(work, 3)); st.session_state["sheet"] = None; st.rerun()
-            if c3.button("â–¶ Process this marksheet", type="primary"):
+            if c3.button("\u25b6 Process this marksheet", type="primary"):
                 try:
                     run_pipeline()
                     st.success("Done. Check the next steps, then verify marks in step 7.")
@@ -161,9 +161,9 @@ elif step == STEPS[2]:
         vis = a.image.copy()
         xs = [b.x for b in a.boxes.values()] ; ys = [b.y for b in a.boxes.values()]
         cv2.rectangle(vis, (min(xs) - 6, min(ys) - 6), (max(b.x + b.w for b in a.boxes.values()) + 6, max(b.y + b.h for b in a.boxes.values()) + 6), (0, 160, 0), 4)
-        c2.image(rgb(vis), caption=f"Aligned (skew {a.skew_deg:+.1f}Â°, turned {a.rotation_k * 90}Â°) - green = marks region", use_container_width=True)
+        c2.image(rgb(vis), caption=f"Aligned (skew {a.skew_deg:+.1f}\u00b0, turned {a.rotation_k * 90}\u00b0) - green = marks region", use_container_width=True)
         st.write("If the sheet is upside-down or the boxes look wrong, force an orientation:")
-        k = st.selectbox("Rotation (counter-clockwise)", [None, 0, 1, 2, 3], format_func=lambda v: "automatic" if v is None else f"{v * 90}Â°")
+        k = st.selectbox("Rotation (counter-clockwise)", [None, 0, 1, 2, 3], format_func=lambda v: "automatic" if v is None else f"{v * 90}\u00b0")
         if st.button("Re-run alignment"):
             try:
                 run_pipeline(k); st.rerun()
@@ -252,7 +252,7 @@ elif step == STEPS[6]:
             for col, bid in zip(cols, ids):
                 r = s.results[bid]
                 with col:
-                    st.caption(f"**{bid}** Â· {BADGE[fin_status] if (fin_status := ('manual' if bid in fin else r.status)) else ''}")
+                    st.caption(f"**{bid}** \u00b7 {BADGE[fin_status] if (fin_status := ('manual' if bid in fin else r.status)) else ''}")
                     st.image(rgb(enlarge(s.crops[bid], 3)), use_container_width=True)
                     if r.reasons and bid not in fin:
                         st.warning("; ".join(r.reasons))

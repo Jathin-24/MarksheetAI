@@ -87,5 +87,5 @@ def evaluate(values: Mapping[str, int | None]) -> Evaluation:
 
 def fmt(x: float | int | None) -> str:
     if x is None:
-        return "–"
+        return "\u2013"
     return f"{x:g}"
