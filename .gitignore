@@ -1,0 +1,9 @@
+__pycache__/
+.venv/
+data/uploads/*
+data/aligned/*
+data/crops/*/*
+data/extracted/*
+outputs/*
+!outputs/sample/
+*.pyc

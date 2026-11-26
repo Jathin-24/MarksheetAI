@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: marksheet-evaluator
+    runtime: docker
+    plan: free
+    healthCheckPath: /_stcore/health
+    envVars:
+      - key: PORT
+        value: "10000"
+      - key: APP_PASSWORD
+        sync: false        # set it in the Render dashboard

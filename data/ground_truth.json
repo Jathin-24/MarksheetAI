@@ -1,0 +1,203 @@
+{
+ "note": "Ground truth read by eye from the photos (box order: 1a-1e, 2A,2B,3A,3B,...,7A,7B). null = blank, '?' = ambiguous in the photo (struck-out/overwritten) and excluded from scoring. Verify before trusting.",
+ "sheets": [
+  {
+   "image": "assets/reference_images/sheet01_keerthana.jpg",
+   "marks": [
+    2,
+    2,
+    2,
+    2,
+    2,
+    null,
+    null,
+    4,
+    null,
+    null,
+    null,
+    4,
+    4,
+    4,
+    4,
+    null,
+    null
+   ]
+  },
+  {
+   "image": "assets/reference_images/sheet02_pavalika.jpg",
+   "marks": [
+    2,
+    2,
+    2,
+    0,
+    2,
+    null,
+    null,
+    6,
+    null,
+    null,
+    null,
+    6,
+    2,
+    null,
+    null,
+    4,
+    2
+   ]
+  },
+  {
+   "image": "assets/reference_images/sheet03_jyothi_portrait.jpg",
+   "marks": [
+    2,
+    2,
+    2,
+    2,
+    2,
+    6,
+    null,
+    null,
+    null,
+    4,
+    4,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
+  },
+  {
+   "image": "assets/reference_images/sheet04_lakshmi_rotated.jpg",
+   "marks": [
+    2,
+    2,
+    2,
+    2,
+    2,
+    null,
+    null,
+    4,
+    "?",
+    null,
+    null,
+    6,
+    4,
+    6,
+    4,
+    null,
+    null
+   ]
+  },
+  {
+   "image": "assets/reference_images/sheet05_blank_narrow.jpg",
+   "marks": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
+  },
+  {
+   "image": "assets/reference_images/sheet06_jyothi_lowres.png",
+   "marks": [
+    2,
+    2,
+    2,
+    2,
+    2,
+    6,
+    null,
+    null,
+    null,
+    4,
+    4,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
+  },
+  {
+   "image": "assets/reference_images/sheet07_blank.jpg",
+   "marks": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
+  },
+  {
+   "image": "assets/reference_images/sheet08_blank.jpg",
+   "marks": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
+  },
+  {
+   "image": "assets/reference_images/sheet09_blank.jpg",
+   "marks": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
+  }
+ ]
+}
